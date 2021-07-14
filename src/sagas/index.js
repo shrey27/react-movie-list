@@ -1,17 +1,18 @@
 import { put, takeLatest, all } from 'redux-saga/effects';
 
-function* fetchNews() {
+const FEATURED_API = "https://api.themoviedb.org/3/movie/popular?api_key=4e44d9029b1270a757cddc766a1bcb63";
 
-  const json = yield fetch('https://newsapi.org/v1/articles?source=cnn&apiKey=c39a26d9c12f48dba2a5c00e35684ecc')
+function* fetchMovies() {
+
+  const json = yield fetch(FEATURED_API)
     .then(response => response.json());
 
-  yield put({ type: "NEWS_RECEIVED", json: json.articles || [{ error: json.message }] });
+  yield put({ type: "MOVIES_RECEIVED", json: json.results || [{ error: json.message }] });
 }
 
 function* actionWatcher() {
-  yield takeLatest('GET_NEWS', fetchNews)
+  yield takeLatest('GET_MOVIES', fetchMovies)
 }
-
 
 export default function* rootSaga() {
   yield all([
