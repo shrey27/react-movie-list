@@ -5,12 +5,9 @@ import Preview from './components/Preview';
 import FavouriteMovies from './components/FavouriteMovies';
 import Movies from './components/Movies';
 
-
-
-
 const FEATURED_API = "https://api.themoviedb.org/3/movie/popular?api_key=4e44d9029b1270a757cddc766a1bcb63";
 
-function App() {
+export default function App() {
   const [movies,setMovies] = useState([]);
   const [favmovies,setFavMovies] = useState([]);
   const [show,setShow] = useState(false);
@@ -52,7 +49,5 @@ function App() {
     </div>
   );
 }
-
-export default App;
 
 
