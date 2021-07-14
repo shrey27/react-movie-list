@@ -1,6 +1,5 @@
 import React from 'react';
 import Thumbnail from './Thumbnail';
-import { connect } from 'react-redux';
 
 function Movies({movies, setShow, setMovie, setFavourite}){
     
@@ -10,7 +9,5 @@ function Movies({movies, setShow, setMovie, setFavourite}){
               setFavourite={setFavourite}/>)) : ''
     );
 }
-const mapStateToProps = (state) => ({
-    movies: state.movies,
-    })
-export default connect(mapStateToProps,null)(Movies)
+
+export default Movies;
