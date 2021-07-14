@@ -3,7 +3,7 @@ const reducer = (state = {}, action) => {
     case 'GET_MOVIES':
       return { ...state };
     case 'MOVIES_RECEIVED':
-      return { ...state, MOVIES: action.json }
+      return { ...state, movies: action.moviesArray }
     default:
       return state;
   }

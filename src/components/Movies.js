@@ -1,12 +1,16 @@
 import React from 'react';
 import Thumbnail from './Thumbnail';
+import { connect } from 'react-redux';
 
-export default function Movies(props){
-    const {movies, setShow, setMovie, setFavourite} = props;
+function Movies({movies, setShow, setMovie, setFavourite}){
     
     return(
-        movies && movies.map((movie) => 
+        movies ? movies.map((movie) => 
             ( <Thumbnail key={movie.id} movie={movie} setShow={setShow} setMovie={setMovie}
-              setFavourite={setFavourite}/>))
+              setFavourite={setFavourite}/>)) : ''
     );
 }
+const mapStateToProps = (state) => ({
+    movies: state.movies,
+    })
+export default connect(mapStateToProps,null)(Movies)
