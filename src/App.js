@@ -10,7 +10,8 @@ import { requestApiData } from "./redux/actions";
 //const FEATURED_API = "https://api.themoviedb.org/3/movie/popular?api_key=4e44d9029b1270a757cddc766a1bcb63";
 
 function App(props) {
-  const [movies,setMovies] = useState([]);
+  const {requestApiData,data} = props;
+  const [movies,setMovies] = useState(null);
   const [favmovies,setFavMovies] = useState([]);
   const [show,setShow] = useState(false);
   const [preview,setPreview] = useState(false);
@@ -18,9 +19,12 @@ function App(props) {
   const [favourite,setFavourite] = useState(false);
 
   useEffect(()=>{
-    props.requestApiData();
-    setMovies(props.data);
-  },[props]);
+    requestApiData();
+    if(!Array.isArray(movies)){
+      console.log('1');
+      setMovies(data);
+    }
+  },[requestApiData,data,movies]);
 
   return (
     <div className="App">
