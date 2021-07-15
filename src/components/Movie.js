@@ -3,13 +3,13 @@ import React from 'react';
 const IMAGE_API = "https://image.tmdb.org/t/p/w500";
 
 export default function Movie(props){
-    const {movie, setPreview, favmovies, setFavMovies} = props;
-    const{title,poster_path,overview,vote_average,adult} = movie;
+    const {setPreview, favmovies, setFavMovies} = props;
+    const{title,poster_path,overview,vote_average,adult} = props.movie;
 
     const updateMovies = () => {
-        if(!favmovies.includes(movie))
+        if(!favmovies.includes(props.movie))
             {
-                setFavMovies([...favmovies,movie]);
+                setFavMovies([...favmovies,props.movie]);
                 document.getElementById('fav').innerHTML='Added';
             }
     }

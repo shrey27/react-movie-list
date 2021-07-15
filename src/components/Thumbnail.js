@@ -15,6 +15,7 @@ function Thumbnail(props){
                 } onClick={()=>{
                     setShow(true);
                     setMovie(movie);
+                    setFavourite(false);
                 }} alt={title}/>
                 <div className="movie-info">
                     <h4>{title}</h4>

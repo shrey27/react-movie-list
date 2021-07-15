@@ -34,7 +34,8 @@ function App(props) {
             show ? <Movie movie={movie} setShow={setShow} favmovies={favmovies} setFavMovies={setFavMovies}
             setPreview={setPreview}/> :
             favourite ?  favmovies.map((movie) => 
-            ( <Thumbnail key={movie.id} movie={movie} setShow={setShow} setMovie={setMovie}/>)): 
+            ( <Thumbnail key={movie.id} movie={movie} setShow={setShow} setMovie={setMovie}
+              setFavourite={setFavourite}/>)): 
             Array.isArray(movies) ?  movies.map((movie) => 
             ( <Thumbnail key={movie.id} movie={movie} setShow={setShow} setMovie={setMovie}
               setFavourite={setFavourite}/>)):''
