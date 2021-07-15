@@ -2,12 +2,14 @@ import './App.css';
 import React, {useState,useEffect} from 'react';
 import Movie from './components/Movie';
 import Preview from './components/Preview';
-import FavouriteMovies from './components/FavouriteMovies';
-import Movies from './components/Movies';
+import Thumbnail from './components/Thumbnail';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { requestApiData } from "./redux/actions";
 
-const FEATURED_API = "https://api.themoviedb.org/3/movie/popular?api_key=4e44d9029b1270a757cddc766a1bcb63";
+//const FEATURED_API = "https://api.themoviedb.org/3/movie/popular?api_key=4e44d9029b1270a757cddc766a1bcb63";
 
-export default function App() {
+function App(props) {
   const [movies,setMovies] = useState([]);
   const [favmovies,setFavMovies] = useState([]);
   const [show,setShow] = useState(false);
@@ -15,19 +17,11 @@ export default function App() {
   const [movie,setMovie] = useState({});
   const [favourite,setFavourite] = useState(false);
 
-  useEffect(() => {
-    getMovies(FEATURED_API);
-  }, [])
-  
-  const getMovies = (API) => {
-      fetch(API)
-          .then(res => res.json())
-          .then(data => {
-            setMovies(data.results);
-            console.log(data.results);
-          });
-    }
-  
+  useEffect(()=>{
+    props.requestApiData();
+    setMovies(props.data);
+  },[props]);
+
   return (
     <div className="App">
       <header>
@@ -39,8 +33,11 @@ export default function App() {
          {
             show ? <Movie movie={movie} setShow={setShow} favmovies={favmovies} setFavMovies={setFavMovies}
             setPreview={setPreview}/> :
-            favourite ? <FavouriteMovies favmovies={favmovies} setShow={setShow} setMovie={setMovie}/>
-            : <Movies  movies={movies} setShow={setShow} setMovie={setMovie} setFavourite={setFavourite}/>
+            favourite ?  favmovies.map((movie) => 
+            ( <Thumbnail key={movie.id} movie={movie} setShow={setShow} setMovie={setMovie}/>)): 
+            Array.isArray(movies) ?  movies.map((movie) => 
+            ( <Thumbnail key={movie.id} movie={movie} setShow={setShow} setMovie={setMovie}
+              setFavourite={setFavourite}/>)):''
           }
           {
             preview ? <Preview setPreview={setPreview} /> : ''
@@ -50,4 +47,10 @@ export default function App() {
   );
 }
 
+const mapStateToProps = state => ({ data: state.data });
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ requestApiData }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
